@@ -14,9 +14,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var primeNumberButton: UIButton!
     
     @IBAction func calculatePrimeNumbers(_ sender: Any) {
-        for number in 0 ... 100_000_000 {
-            let isPrimeNumber = isPrime(number: number)
-            print("\(number) is prime: \(isPrimeNumber)")
+        let queue = OperationQueue()
+        let operation = CalculatePrimeOperation()
+        queue.addOperation {
+            for number in 0 ... 100_000_000 {
+                let isPrimeNumber = self.isPrime(number: number)
+                print("\(number) is prime: \(isPrimeNumber)")
+            }
+
         }
     }
     
