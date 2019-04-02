@@ -15,13 +15,16 @@ class ViewController: UIViewController {
     
     @IBAction func calculatePrimeNumbers(_ sender: Any) {
         let queue = OperationQueue()
+        enablePrimeButton(false)
         let operation = CalculatePrimeOperation()
         queue.addOperation {
-            for number in 0 ... 100_000_000 {
+            for number in 0 ... 100_000 {
                 let isPrimeNumber = self.isPrime(number: number)
                 print("\(number) is prime: \(isPrimeNumber)")
             }
-
+            OperationQueue.main.addOperation {
+                self.enablePrimeButton(true)
+            }
         }
     }
     
@@ -46,5 +49,13 @@ class ViewController: UIViewController {
         }
         return true
         }
+    
+    func enablePrimeButton(_ isEnabled: Bool) {
+        primeNumberButton.isEnabled = isEnabled
+        if isEnabled {
+            primeNumberButton.setTitle("Calculating", for: .normal)
+        }
+    }
+    
     }
 
